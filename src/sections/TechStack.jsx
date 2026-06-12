@@ -1,12 +1,15 @@
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
+import { useGSAP } from "@gsap/react";
+import { useApp } from "../context/AppContext.jsx";
 import TitleHeader from "../components/TitleHeader";
 import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
-import { techStackIcons } from "../constants";
+import { techStackIcons, uiTranslations } from "../constants";
 // import { techStackImgs } from "../constants";
 
 const TechStack = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
+
   // Animate the tech cards in the skills section
   useGSAP(() => {
     // This animation is triggered when the user scrolls to the #skills wrapper
@@ -39,8 +42,8 @@ const TechStack = () => {
     <div id="skills" className="flex-center section-padding">
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
-          title="How I Can Contribute & My Key Skills"
-          sub="🤝 What I Bring to the Table"
+          title={t.skillsTitle}
+          sub={t.skillsSub}
         />
         <div className="tech-grid">
           {/* Loop through the techStackIcons array and create a component for each item. 

@@ -1,22 +1,32 @@
-import { socialImgs } from "../constants";
+import { useApp } from "../context/AppContext.jsx";
+import { socialImgs, uiTranslations } from "../constants";
 
 const Footer = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
+
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="flex flex-col justify-center">
-          <p>Terms & Conditions</p>
+          <p>{t.footerTerms}</p>
         </div>
         <div className="socials">
           {socialImgs.map((socialImg, index) => (
-            <div key={index} className="icon">
-              <img src={socialImg.imgPath} alt="social icon" />
-            </div>
+            <a
+              key={index}
+              href={socialImg.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="icon"
+            >
+              <img src={socialImg.imgPath} alt={socialImg.name} />
+            </a>
           ))}
         </div>
         <div className="flex flex-col justify-center">
           <p className="text-center md:text-end">
-            © {new Date().getFullYear()} Trinh Trung Tai. All rights reserved.
+            Trinh Trung Tai {t.footerRights}
           </p>
         </div>
       </div>

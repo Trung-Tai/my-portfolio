@@ -1,12 +1,16 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
-import { words } from "../constants";
+import { useApp } from "../context/AppContext.jsx";
+import { words, uiTranslations } from "../constants";
 import HeroExperience from "../components/models/hero_models/HeroExperience";
 
 const Hero = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
+  const wList = words[language] || words.en;
+
   useGSAP(() => {
     gsap.fromTo(
       ".hero-text h1",
@@ -27,10 +31,10 @@ const Hero = () => {
           <div className="flex flex-col gap-7">
             <div className="hero-text">
               <h1>
-                Shaping
+                {t.heroTitle1}
                 <span className="slide">
                   <span className="wrapper">
-                    {words.map((word, index) => (
+                    {wList.map((word, index) => (
                       <span
                         key={index}
                         className="flex items-center md:gap-3 gap-1 pb-2"
@@ -46,16 +50,17 @@ const Hero = () => {
                   </span>
                 </span>
               </h1>
-              <h1>into Real Projects</h1>
-              <h1>that Deliver Results</h1>
+              <h1>{t.heroTitle2}</h1>
+              <h1>{t.heroTitle3}</h1>
             </div>
 
-            <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-              Hi, I’m Trinh Trung Tai, a Full-Stack Developer based in Ho Chi Minh City with a passion for building scalable systems and AI-powered automation.
-            </p>
+            <p
+              dangerouslySetInnerHTML={{ __html: t.heroBio }}
+              className="text-white-50 md:text-xl relative z-10 pointer-events-none"
+            />
 
             <Button
-              text="See My Work"
+              text={t.heroCta}
               className="md:w-80 md:h-16 w-60 h-12"
               id="counter"
             />
@@ -69,8 +74,6 @@ const Hero = () => {
           </div>
         </figure>
       </div>
-
-      <AnimatedCounter />
     </section>
   );
 };

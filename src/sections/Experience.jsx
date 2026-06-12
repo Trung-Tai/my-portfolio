@@ -1,14 +1,19 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useApp } from "../context/AppContext.jsx";
 
-import { expCards } from "../constants";
+import { expCards, uiTranslations } from "../constants";
 import TitleHeader from "../components/TitleHeader";
 import GlowCard from "../components/GlowCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Experience = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
+  const cards = expCards[language] || expCards.en;
+
   useGSAP(() => {
     // Loop through each timeline card and animate them in
     // as the user scrolls to each card
@@ -86,8 +91,8 @@ const Experience = () => {
           start: "top 60%",
         },
       });
-    }, "<"); // position parameter - insert at the start of the animation
-  }, []);
+    });
+  }, [cards]);
 
   return (
     <section
@@ -96,15 +101,15 @@ const Experience = () => {
     >
       <div className="w-full h-full md:px-20 px-5">
         <TitleHeader
-          title="Professional Work Experience"
-          sub="💼 My Career Overview"
+          title={t.expTitle}
+        // sub={t.expSub}
         />
         <div className="mt-32 relative">
           <div className="relative z-50 xl:space-y-32 space-y-10">
-            {expCards.map((card) => (
+            {cards.map((card) => (
               <div key={card.title} className="exp-card-wrapper">
                 <div className="xl:w-2/6">
-                  <GlowCard card={card}>
+                  <GlowCard card={card} showReview={false}>
                     <div>
                       <img src={card.imgPath} alt="exp-img" />
                     </div>
@@ -126,7 +131,7 @@ const Experience = () => {
                           🗓️&nbsp;{card.date}
                         </p>
                         <p className="text-[#839CB5] italic">
-                          Responsibilities
+                          {t.expResp}
                         </p>
                         <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
                           {card.responsibilities.map(

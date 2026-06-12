@@ -5,7 +5,12 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
+import { useApp } from "../context/AppContext.jsx";
+import { uiTranslations } from "../constants";
+
 const AppShowcase = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
   const sectionRef = useRef(null);
   const rydeRef = useRef(null);
   const libraryRef = useRef(null);
@@ -53,10 +58,10 @@ const AppShowcase = () => {
             </div>
             <div className="text-content">
               <h2>
-                A Full-Featured Operating System for Art Studios — Studio OS
+                {t.projectStudioTitle}
               </h2>
               <p className="text-white-50 md:text-xl">
-                An all-in-one SaaS platform for booking, payment processing, artist payouts, and AI-driven automation using NestJS, n8n, and GPT-4o/Gemini.
+                {t.projectStudioDesc}
               </p>
             </div>
           </div>
@@ -69,14 +74,14 @@ const AppShowcase = () => {
                   alt="ShoesStore E-Commerce"
                 />
               </div>
-              <h2>ShoesStore E-Commerce — Modern Dashboard & Storefront</h2>
+              <h2>{t.projectShoesTitle}</h2>
             </div>
 
             <div className="project" ref={ycDirectoryRef}>
               <div className="image-wrapper bg-[#FFE7EB]">
                 <img src="/images/project3.png" alt="Stock Market Web App" />
               </div>
-              <h2>Stock Market Web App — Real-Time Tracking & premium upgrades</h2>
+              <h2>{t.projectStockTitle}</h2>
             </div>
           </div>
         </div>

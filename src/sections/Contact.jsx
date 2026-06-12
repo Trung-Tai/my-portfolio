@@ -1,10 +1,14 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useApp } from "../context/AppContext.jsx";
+import { uiTranslations } from "../constants";
 
 import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/models/contact/ContactExperience";
 
 const Contact = () => {
+  const { language } = useApp();
+  const t = uiTranslations[language] || uiTranslations.en;
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -43,8 +47,8 @@ const Contact = () => {
     <section id="contact" className="flex-center section-padding">
       <div className="w-full h-full md:px-10 px-5">
         <TitleHeader
-          title="Get in Touch – Let’s Connect"
-          sub="💬 Have questions or ideas? Let’s talk! 🚀"
+          title={t.contactTitle}
+          sub={t.contactSub}
         />
         <div className="grid-12-cols mt-16">
           <div className="xl:col-span-5">
@@ -55,39 +59,39 @@ const Contact = () => {
                 className="w-full flex flex-col gap-7"
               >
                 <div>
-                  <label htmlFor="name">Your name</label>
+                  <label htmlFor="name">{t.contactName}</label>
                   <input
                     type="text"
                     id="name"
                     name="name"
                     value={form.name}
                     onChange={handleChange}
-                    placeholder="What’s your good name?"
+                    placeholder={t.contactNamePlaceholder}
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email">Your Email</label>
+                  <label htmlFor="email">{t.contactEmail}</label>
                   <input
                     type="email"
                     id="email"
                     name="email"
                     value={form.email}
                     onChange={handleChange}
-                    placeholder="What’s your email address?"
+                    placeholder={t.contactEmailPlaceholder}
                     required
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="message">Your Message</label>
+                  <label htmlFor="message">{t.contactMessage}</label>
                   <textarea
                     id="message"
                     name="message"
                     value={form.message}
                     onChange={handleChange}
-                    placeholder="How can I help you?"
+                    placeholder={t.contactMessagePlaceholder}
                     rows="5"
                     required
                   />
@@ -97,7 +101,7 @@ const Contact = () => {
                   <div className="cta-button group">
                     <div className="bg-circle" />
                     <p className="text">
-                      {loading ? "Sending..." : "Send Message"}
+                      {loading ? t.contactBtnSending : t.contactBtn}
                     </p>
                     <div className="arrow-wrapper">
                       <img src="/images/arrow-down.svg" alt="arrow" />

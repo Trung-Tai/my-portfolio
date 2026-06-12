@@ -3,16 +3,85 @@
 
 :root {
   --gradient: radial-gradient(circle, #e5e5e5 0%, #fff 100%);
+  --bg-primary: #000000;
+  --text-primary: #ffffff;
+  --text-secondary: #d9ecff; /* white-50 */
+  --border-card: #1c1c21;   /* black-50 */
+  --bg-card: #0e0e10;       /* black-100 */
+  --bg-card-secondary: #282732; /* black-200 */
+  --text-muted: #839cb5;    /* blue-50 */
+  --bg-input: #2d2d38;      /* blue-100 */
+  --navbar-bg: rgba(15, 23, 42, 0.86);
+  --navbar-bg-secondary: rgba(30, 41, 59, 0.78);
+  --navbar-bg-scrolled: rgba(15, 23, 42, 0.94);
+  --navbar-border: rgba(148, 163, 184, 0.24);
+  --navbar-shadow: 0 18px 55px rgba(0, 0, 0, 0.34);
+  --navbar-link: #cbd5e1;
+  --navbar-active: #ffffff;
+  --navbar-accent: #38bdf8;
+  --navbar-control-bg: rgba(255, 255, 255, 0.08);
+  --navbar-control-hover: rgba(56, 189, 248, 0.16);
+  --navbar-cta-bg: #e0f2fe;
+  --navbar-cta-text: #0f172a;
+  --navbar-cta-hover-bg: #38bdf8;
+  --navbar-cta-hover-text: #020617;
+
+  /* CTA Button variables */
+  --cta-bg: var(--bg-card-secondary);
+  --cta-circle-bg: var(--text-secondary);
+  --cta-text: #000000;
+  --cta-text-hover: var(--text-secondary);
+  --cta-arrow-filter: none;
+
+  /* Social Icons filter */
+  --social-icon-filter: none;
+}
+
+html.light {
+  --bg-primary: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --border-card: #e2e8f0;
+  --bg-card: #ffffff;
+  --bg-card-secondary: #f1f5f9;
+  --text-muted: #64748b;
+  --bg-input: #e2e8f0;
+  --navbar-bg: rgba(226, 232, 240, 0.9);
+  --navbar-bg-secondary: rgba(241, 245, 249, 0.84);
+  --navbar-bg-scrolled: rgba(226, 232, 240, 0.96);
+  --navbar-border: rgba(100, 116, 139, 0.22);
+  --navbar-shadow: 0 16px 45px rgba(15, 23, 42, 0.14);
+  --navbar-link: #475569;
+  --navbar-active: #0f172a;
+  --navbar-accent: #0284c7;
+  --navbar-control-bg: rgba(255, 255, 255, 0.72);
+  --navbar-control-hover: rgba(14, 165, 233, 0.14);
+  --navbar-cta-bg: #0f172a;
+  --navbar-cta-text: #ffffff;
+  --navbar-cta-hover-bg: #0284c7;
+  --navbar-cta-hover-text: #ffffff;
+  --gradient: radial-gradient(circle, #000000 0%, #334155 100%);
+
+  /* CTA Button variables */
+  --cta-bg: var(--bg-card-secondary);
+  --cta-circle-bg: var(--text-secondary);
+  --cta-text: #ffffff;
+  --cta-text-hover: var(--text-secondary);
+  --cta-arrow-filter: invert(1);
+
+  /* Social Icons filter */
+  --social-icon-filter: brightness(0.2);
 }
 
 html,
 body {
   width: 100dvw;
   overflow-x: hidden;
-  background-color: black;
-  color: white;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   scroll-behavior: smooth;
   font-family: "Mona Sans", sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 section {
@@ -21,12 +90,12 @@ section {
 
 @theme {
   --font-sans: "Mona Sans", sans-serif;
-  --color-white-50: #d9ecff;
-  --color-black-50: #1c1c21;
-  --color-black-100: #0e0e10;
-  --color-black-200: #282732;
-  --color-blue-50: #839cb5;
-  --color-blue-100: #2d2d38;
+  --color-white-50: var(--text-secondary);
+  --color-black-50: var(--border-card);
+  --color-black-100: var(--bg-card);
+  --color-black-200: var(--bg-card-secondary);
+  --color-blue-50: var(--text-muted);
+  --color-blue-100: var(--bg-input);
 }
 
 @layer utilities {
@@ -103,22 +172,35 @@ section {
   }
 
   .navbar {
-    @apply fixed w-full left-1/2 py-5 px-5 md:px-20 -translate-x-1/2 z-[100] transition-all duration-300 ease-in-out;
+    @apply fixed w-full left-1/2 px-4 md:px-8 -translate-x-1/2 z-[100] transition-all duration-300 ease-in-out;
 
     &.scrolled {
-      @apply top-0 bg-black;
+      @apply top-3 md:top-4;
     }
 
     &.not-scrolled {
-      @apply md:top-10 top-0 bg-transparent;
+      @apply top-3 md:top-6 bg-transparent;
     }
 
-    .inner {
-      @apply mx-auto flex items-center justify-between;
+    & > .inner {
+      @apply mx-auto flex items-center justify-between max-w-6xl rounded-2xl px-4 py-3 md:px-6 transition-all duration-300;
+      background: linear-gradient(135deg, var(--navbar-bg), var(--navbar-bg-secondary));
+      border: 1px solid var(--navbar-border);
+      box-shadow: var(--navbar-shadow);
+      backdrop-filter: blur(18px) saturate(140%);
+    }
+
+    &.scrolled > .inner {
+      background: var(--navbar-bg-scrolled);
     }
 
     .logo {
-      @apply text-white-50 text-xl md:text-2xl font-semibold transition-transform duration-300 hover:scale-105;
+      @apply inline-flex flex-shrink-0 items-center gap-2 whitespace-nowrap text-xl md:text-2xl font-semibold transition-transform duration-300 hover:scale-105;
+      color: var(--navbar-active);
+
+      img {
+        @apply flex-none;
+      }
     }
 
     nav.desktop {
@@ -128,16 +210,34 @@ section {
         @apply flex space-x-8;
 
         li {
-          @apply text-white-50 relative;
+          @apply relative;
+          color: var(--navbar-link);
 
           span {
-            @apply transition-colors duration-300 hover:text-white;
+            @apply transition-colors duration-300;
+          }
+
+          &:hover span,
+          &.active-link span {
+            color: var(--navbar-active);
           }
 
           .underline {
-            @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-full;
+            @apply absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full;
+            background-color: var(--navbar-accent);
           }
         }
+      }
+    }
+
+    .nav-toggle-btn {
+      @apply flex items-center justify-center w-10 h-10 rounded-full text-lg transition-colors cursor-pointer;
+      background-color: var(--navbar-control-bg);
+      border: 1px solid var(--navbar-border);
+      color: var(--navbar-active);
+
+      &:hover {
+        background-color: var(--navbar-control-hover);
       }
     }
 
@@ -145,10 +245,17 @@ section {
       @apply flex;
 
       .inner {
-        @apply px-5 py-2 rounded-lg bg-white text-black group-hover:bg-black-50 transition-colors duration-300;
+        @apply px-5 py-2 rounded-lg transition-colors duration-300;
+        background-color: var(--navbar-cta-bg);
+        color: var(--navbar-cta-text);
 
         span {
-          @apply group-hover:text-white transition-colors duration-300;
+          @apply transition-colors duration-300;
+        }
+
+        &:hover {
+          background-color: var(--navbar-cta-hover-bg);
+          color: var(--navbar-cta-hover-text);
         }
       }
     }
@@ -207,26 +314,38 @@ section {
   }
 
   .cta-button {
-    @apply px-4 py-4 rounded-lg bg-black-200 flex justify-center items-center relative cursor-pointer overflow-hidden;
+    background-color: var(--cta-bg);
+    @apply px-4 py-4 rounded-lg flex justify-center items-center relative cursor-pointer overflow-hidden;
 
     .bg-circle {
+      background-color: var(--cta-circle-bg);
       @apply absolute -right-10 origin-center top-1/2 -translate-y-1/2 
         w-[120%] h-[120%] group-hover:size-10 group-hover:right-10
-        rounded-full bg-white-50 transition-all duration-500;
+        rounded-full transition-all duration-500;
     }
 
     .text {
-      @apply uppercase md:text-lg text-black transition-all duration-500
-        group-hover:text-white-50 group-hover:-translate-x-5 xl:translate-x-0 -translate-x-5;
+      color: var(--cta-text);
+      @apply uppercase md:text-lg transition-all duration-500
+        group-hover:-translate-x-5 xl:translate-x-0 -translate-x-5;
+    }
+
+    &.group:hover .text {
+      color: var(--cta-text-hover);
     }
 
     .arrow-wrapper {
-      @apply group-hover:bg-white-50 size-10 rounded-full absolute right-10 top-1/2 
+      @apply size-10 rounded-full absolute right-10 top-1/2 
         -translate-y-1/2 flex justify-center items-center overflow-hidden;
 
       img {
+        filter: var(--cta-arrow-filter);
         @apply size-5 xl:-translate-y-32 translate-y-0 animate-bounce group-hover:translate-y-0 transition-all duration-500;
       }
+    }
+
+    &.group:hover .arrow-wrapper {
+      background-color: var(--cta-circle-bg);
     }
   }
 
@@ -243,7 +362,8 @@ section {
   }
 
   .timeline {
-    @apply absolute z-30 h-[110%] -top-10 w-14 md:w-28 bg-black;
+    @apply absolute z-30 h-[110%] -top-10 w-14 md:w-28;
+    background-color: var(--bg-primary);
   }
 
   .timeline-logo {
@@ -316,6 +436,8 @@ section {
       }
 
       img {
+        filter: var(--social-icon-filter);
+        transition: filter 0.3s ease;
         @apply inline-block;
       }
     }
