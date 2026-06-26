@@ -270,11 +270,11 @@ const expLogos = [
 const testimonials = [];
 
 const socialImgs = [
-  {
-    name: "fb",
-    imgPath: "/images/fb.png",
-    link: "https://www.facebook.com/trinhtrungtai.01",
-  },
+  // {
+  //   name: "fb",
+  //   imgPath: "/images/fb.png",
+  //   link: "https://www.facebook.com/trinhtrungtai.01",
+  // },
   {
     name: "linkedin",
     imgPath: "/images/linkedin.png",
@@ -289,7 +289,7 @@ const uiTranslations = {
     heroTitle2: "into Real Projects",
     heroTitle3: "that Deliver Results",
     heroBio: "Hi, I'm Trinh Trung Tai, a Full-Stack Developer based <br /> in Ho Chi Minh City with a passion for building scalable <br /> systems and AI-powered automation.",
-    heroCta: "See My Work",
+    heroCta: "See Experience",
     expTitle: "Professional Work Experience",
     // expSub: "💼 My Career Overview",
     expResp: "Responsibilities",
@@ -316,7 +316,7 @@ const uiTranslations = {
     heroTitle2: "thành những Dự án",
     heroTitle3: "mang lại Hiệu quả thực tế",
     heroBio: "Xin chào, tôi là Trịnh Trung Tài, một kỹ sư phát triển Full-Stack tại <br /> TP. Hồ Chí Minh với đam mê xây dựng hệ thống quy mô lớn <br /> và giải pháp tự động hóa tích hợp AI.",
-    heroCta: "Xem dự án",
+    heroCta: "Xem kinh nghiệm",
     expTitle: "Kinh nghiệm làm việc thực tế",
     // expSub: "💼 Tổng quan sự nghiệp",
     expResp: "Nhiệm vụ & Đóng góp chính",

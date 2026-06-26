@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useApp } from "../context/AppContext.jsx";
 import { navLinks, uiTranslations } from "../constants";
 
@@ -6,18 +6,30 @@ const NavBar = ({ currentPage }) => {
   const { language, toggleLanguage, theme, toggleTheme } = useApp();
   // track if the user has scrolled down the page
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
     // create an event listener for when the user scrolls
     const handleScroll = () => {
-      // check if the user has scrolled down at least 10px
-      // if so, set the state to true
-      const isScrolled = window.scrollY > 10;
+      const currentScrollY = window.scrollY;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
+      const isScrolled = currentScrollY > 10;
+
       setScrolled(isScrolled);
+
+      if (currentScrollY < 20) {
+        setHidden(false);
+      } else if (scrollDelta > 6) {
+        setHidden(currentScrollY > lastScrollY.current);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
     // add the event listener to the window
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
 
     // cleanup the event listener when the component is unmounted
     return () => window.removeEventListener("scroll", handleScroll);
@@ -26,7 +38,11 @@ const NavBar = ({ currentPage }) => {
   const links = navLinks[language] || navLinks.en;
 
   return (
-    <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"}`}>
+    <header
+      className={`navbar ${scrolled ? "scrolled" : "not-scrolled"} ${
+        hidden ? "nav-hidden" : "nav-visible"
+      }`}
+    >
       <div className="inner">
         <a href="#/home" className="logo">
           <img src="/images/tai-2d.png" alt="logo" width={30} height={30} />Trung Tai
